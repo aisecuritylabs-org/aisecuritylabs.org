@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Security Labs - AI Red Teaming & Security Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 102, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 140, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6600, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+        }
+
+        nav a:hover {
+            color: #ff6600;
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ff6600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6600, #ff8c00);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid rgba(255, 102, 0, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 102, 0, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff6600;
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h3 {
+            color: #ff8c00;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #cccccc;
+            line-height: 1.8;
+        }
+
+        .card ul {
+            margin-top: 1rem;
+            margin-left: 1.5rem;
+            color: #cccccc;
+        }
+
+        .card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff6600, #ff8c00);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 1rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.4);
+        }
+
+        footer {
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255, 102, 0, 0.2);
+            padding: 2rem;
+            text-align: center;
+            color: #888;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#red-teaming">Red Teaming</a></li>
+            <li><a href="#pentesting">Pentesting</a></li>
+            <li><a href="#compliance">Compliance</a></li>
+            <li><a href="#intelligence">Threat Intel</a></li>
+            <li><a href="#resources">Resources</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>AI Security Labs</h1>
+            <p class="tagline">Your Hub for AI Red Teaming, Security Testing & Intelligence</p>
+            <p style="color: #aaa; max-width: 700px; margin: 0 auto 2rem;">Empowering security professionals with cutting-edge resources, methodologies, and intelligence for securing AI systems against emerging threats.</p>
+            <a href="#red-teaming" class="cta-button">Explore Resources</a>
+        </div>
+    </section>
+
+    <section id="red-teaming" class="section">
+        <h2>AI Red Teaming</h2>
+        <p style="color: #ccc; margin-top: 2rem; font-size: 1.1rem;">Adversarial testing methodologies for AI systems to identify vulnerabilities before they're exploited.</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="icon">🎯</div>
+                <h3>Attack Vectors</h3>
+                <p>Comprehensive database of AI-specific attack vectors including prompt injection, model inversion, data poisoning, and adversarial examples.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🛠️</div>
+                <h3>Testing Frameworks</h3>
+                <p>Structured methodologies and frameworks for conducting thorough red team assessments on LLMs, computer vision models, and AI agents.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📊</div>
+                <h3>Case Studies</h3>
+                <p>Real-world examples of successful AI red teaming operations, lessons learned, and effective remediation strategies.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pentesting" class="section">
+        <h2>AI Penetration Testing</h2>
+        <p style="color: #ccc; margin-top: 2rem; font-size: 1.1rem;">Practical techniques and tools for security assessments of AI-powered systems and infrastructure.</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="icon">🔍</div>
+                <h3>Assessment Methodology</h3>
+                <p>Step-by-step guides for penetration testing AI APIs, model endpoints, training pipelines, and inference infrastructure.</p>
+                <ul>
+                    <li>API security testing</li>
+                    <li>Model endpoint exploitation</li>
+                    <li>Data pipeline vulnerabilities</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="icon">⚡</div>
+                <h3>Tools & Scripts</h3>
+                <p>Curated collection of open-source tools and custom scripts for automated AI security testing and vulnerability scanning.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📝</div>
+                <h3>Reporting Templates</h3>
+                <p>Professional reporting templates and documentation standards for communicating AI security findings to stakeholders.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="compliance" class="section">
+        <h2>Auditing & Compliance</h2>
+        <p style="color: #ccc; margin-top: 2rem; font-size: 1.1rem;">Navigate the evolving landscape of AI regulations and compliance requirements.</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="icon">📋</div>
+                <h3>Regulatory Frameworks</h3>
+                <p>Comprehensive coverage of AI governance frameworks including EU AI Act, NIST AI RMF, ISO/IEC standards, and industry-specific regulations.</p>
+            </div>
+            <div class="card">
+                <div class="icon">✓</div>
+                <h3>Audit Checklists</h3>
+                <p>Detailed checklists and assessment criteria for evaluating AI systems against security, privacy, and ethical standards.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🔐</div>
+                <h3>Best Practices</h3>
+                <p>Industry best practices for secure AI development, deployment, monitoring, and incident response procedures.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="intelligence" class="section">
+        <h2>Threat Intelligence</h2>
+        <p style="color: #ccc; margin-top: 2rem; font-size: 1.1rem;">Stay ahead of emerging AI security threats with real-time intelligence and analysis.</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="icon">🌐</div>
+                <h3>Threat Landscape</h3>
+                <p>Regular updates on the latest AI security threats, attack campaigns, and vulnerability disclosures affecting AI systems worldwide.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🎭</div>
+                <h3>Adversary Tactics</h3>
+                <p>Analysis of threat actor behaviors, TTPs specific to AI systems, and attribution of AI-targeted attacks.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🚨</div>
+                <h3>Incident Response</h3>
+                <p>Playbooks and response procedures for AI security incidents including model theft, data breaches, and service disruptions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="resources" class="section">
+        <h2>Public Resources</h2>
+        <p style="color: #ccc; margin-top: 2rem; font-size: 1.1rem;">Free, community-driven resources to advance AI security knowledge and capabilities.</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="icon">📚</div>
+                <h3>Learning Materials</h3>
+                <p>Tutorials, research papers, webinars, and training materials covering fundamental to advanced AI security concepts.</p>
+            </div>
+            <div class="card">
+                <div class="icon">💻</div>
+                <h3>Open Source Tools</h3>
+                <p>Community-maintained tools, libraries, and frameworks for AI security testing, monitoring, and defense.</p>
+            </div>
+            <div class="card">
+                <div class="icon">👥</div>
+                <h3>Community</h3>
+                <p>Join our community of AI security professionals. Share knowledge, collaborate on research, and contribute to open projects.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 AI Security Labs. Open resources for the security community.</p>
+        <p style="margin-top: 1rem; color: #666;">aisecuritylabs.org</p>
+    </footer>
+</body>
+</html>
